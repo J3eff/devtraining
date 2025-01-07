@@ -54,3 +54,23 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Dokcer
+# Ignorar arquivos de configuração do Docker
+Dockerfile
+Dockerfile.*
+
+# Ignorar diretórios de volumes e dados
+docker-compose.override.yml
+docker-compose*.yml
+
+# Ignorar logs do Docker
+*.log
+
+# Ignorar diretório de configuração do Docker
+.docker/
+
+# Ignorar diretórios e arquivos de build
+build/
+tmp/
+*.pid
