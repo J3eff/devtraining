@@ -19,6 +19,6 @@ export class Course {
   description: string;
 
   @JoinTable() // Define o lado principal do relacionamento
-  @ManyToMany(() => Tag, (tag) => tag.courses)
+  @ManyToMany(() => Tag, (tag) => tag.courses, { cascade: true })
   tags: Tag[];
 }
