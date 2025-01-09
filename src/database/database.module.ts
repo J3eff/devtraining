@@ -12,7 +12,7 @@ export const dataSourceOptions: DataSourceOptions = {
   password: 'docker',
   database: 'devtraining',
   entities: [Course, Tag],
-  synchronize: true, //Quando entidade definidas, ele cria as tabelas automaticamente.
+  synchronize: false, //true: Quando entidade definidas, ele cria as tabelas automaticamente.
 };
 
 @Module({
