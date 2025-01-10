@@ -9,7 +9,7 @@ describe('CoursesService unit tests', () => {
   let created_at: Date;
   let expectOutputTags: any;
   let expectOutputCourses: any;
-  let mockCoursesRepository: any;
+  let mockCourseRepository: any;
   let mockTagRepository: any;
 
   beforeEach(async () => {
@@ -29,7 +29,7 @@ describe('CoursesService unit tests', () => {
     };
 
     //mocks repository
-    mockCoursesRepository = {
+    mockCourseRepository = {
       create: jest.fn().mockReturnValue(Promise.resolve(expectOutputCourses)),
       save: jest.fn().mockReturnValue(Promise.resolve(expectOutputCourses)),
       update: jest.fn().mockReturnValue(Promise.resolve(expectOutputCourses)),
@@ -51,7 +51,7 @@ describe('CoursesService unit tests', () => {
 
   it('should create a course', async () => {
     //@ts-expect-error defined part of methods
-    service['coursesRepository'] = mockCoursesRepository;
+    service['coursesRepository'] = mockCourseRepository;
     //@ts-expect-error defined part of methods
     service['tagRepository'] = mockTagRepository;
 
@@ -63,19 +63,19 @@ describe('CoursesService unit tests', () => {
 
     const newCourse = await service.create(createCourseDTO);
 
-    expect(mockCoursesRepository.save).toHaveBeenCalled();
+    expect(mockCourseRepository.save).toHaveBeenCalled();
     expect(expectOutputCourses).toStrictEqual(newCourse);
   });
 
   it('should list all courses', async () => {
     //@ts-expect-error defined part of methods
-    service['coursesRepository'] = mockCoursesRepository;
+    service['coursesRepository'] = mockCourseRepository;
     //@ts-expect-error defined part of methods
     service['tagRepository'] = mockTagRepository;
 
-    const courses = service.findAll();
+    const courses = await service.findAll();
 
-    expect(mockCoursesRepository.find).toHaveBeenCalled();
+    expect(mockCourseRepository.find).toHaveBeenCalled();
     expect(expectOutputCourses).toStrictEqual(courses);
   });
 });
