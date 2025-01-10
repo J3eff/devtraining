@@ -10,17 +10,17 @@ import { UpdateCourseDTO } from './dto/update-course.dto';
 @Injectable()
 export class CoursesService {
   @InjectRepository(Course)
-  private readonly coureseRepository: Repository<Course>;
+  private readonly coursesRepository: Repository<Course>;
 
   @InjectRepository(Tag)
   private readonly tagRepository: Repository<Tag>;
 
   async findAll() {
-    return await this.coureseRepository.find({ relations: ['tags'] });
+    return await this.coursesRepository.find({ relations: ['tags'] });
   }
 
   async findOne(id: string) {
-    const course = await this.coureseRepository.findOne({
+    const course = await this.coursesRepository.findOne({
       where: { id },
       relations: ['tags'],
     });
@@ -36,9 +36,9 @@ export class CoursesService {
     );
 
     // Cria entidade
-    const course = this.coureseRepository.create({ ...createCourseDTO, tags });
+    const course = this.coursesRepository.create({ ...createCourseDTO, tags });
     // Salva a entidade criada
-    return await this.coureseRepository.save(course);
+    return await this.coursesRepository.save(course);
   }
 
   async update(id: string, updateCourseDTO: UpdateCourseDTO) {
@@ -48,7 +48,7 @@ export class CoursesService {
         updateCourseDTO.tags.map((name) => this.preloadTagByName(name)),
       ));
 
-    const course = await this.coureseRepository.preload({
+    const course = await this.coursesRepository.preload({
       ...updateCourseDTO,
       id,
       tags,
@@ -56,15 +56,15 @@ export class CoursesService {
 
     if (!course) throw new NotFoundException(`Course ID ${id} not found`);
 
-    return await this.coureseRepository.save(course);
+    return await this.coursesRepository.save(course);
   }
 
   async remove(id: string) {
-    const course = await this.coureseRepository.findOne({ where: { id } });
+    const course = await this.coursesRepository.findOne({ where: { id } });
 
     if (!course) throw new NotFoundException(`Course ID ${id} not found`);
 
-    return await this.coureseRepository.remove(course);
+    return await this.coursesRepository.remove(course);
   }
 
   private async preloadTagByName(name: string): Promise<Tag> {

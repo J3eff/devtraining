@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { CoursesService } from './courses.service';
 import { create } from 'node:domain';
+import { CreateCourseDTO } from './dto/create-course.dto';
 
 describe('CoursesService unit tests', () => {
   let service: CoursesService;
@@ -46,5 +47,23 @@ describe('CoursesService unit tests', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should create a course', async () => {
+    //@ts-expect-error defined part of methods
+    service['coursesRepository'] = mockCoursesRepository;
+    //@ts-expect-error defined part of methods
+    service['tagRepository'] = mockTagRepository;
+
+    const createCourseDTO: CreateCourseDTO = {
+      name: 'test',
+      description: 'test description',
+      tags: ['nestjs'],
+    };
+
+    const newCourse = await service.create(createCourseDTO);
+
+    expect(mockCoursesRepository.save).toHaveBeenCalled();
+    expect(expectOutputCourses).toStrictEqual(newCourse);
   });
 });
