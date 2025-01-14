@@ -1,7 +1,7 @@
 version: '3.1'
 
 services:
-  db: 
+  db:
     build: .
     container_name: devtraining-db
     restart: always
@@ -11,4 +11,14 @@ services:
       - .docker/dbdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=devtraining      
+      - POSTGRES_DB=devtraining
+
+  dbtest:
+    build: .
+    container_name: test-db
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=devtraining
